@@ -9,6 +9,10 @@ export const createCommentSelector = () => createSelector(commentsSelector, idSe
     console.log('---', 'searching for comment', id)
     return comments[id]
 })
+export const createArticleSelector = () => createSelector(articlesSelector, idSelector, (articles, id) => {
+    console.log('---', 'searching for article', id)
+    return articles[id]
+})
 
 export const filtratedArticlesSelector = createSelector(articlesSelector, filtersSelector, (articles, filters) => {
     console.log('---', 'computing filters')
