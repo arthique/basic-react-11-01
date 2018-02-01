@@ -17,10 +17,14 @@ export const createArticleSelector = () => createSelector(articlesSelector, idSe
 export const filtratedArticlesSelector = createSelector(articlesSelector, filtersSelector, (articles, filters) => {
     console.log('---', 'computing filters')
     const {selected, dateRange: {from, to}} = filters
+    const filtratedArticles = {};
+    let published;
+    for(let id in articles) {
+        published = Date.parse(articles[id].date)
+        if ((!selected.length || selected.includes(id)) && (!from || !to || (published > from && published < to))) {
+            filtratedArticles[id] = articles[id]
+        }
+    }
+    return filtratedArticles
 
-    return articles.filter(article => {
-        const published = Date.parse(article.date)
-        return (!selected.length || selected.includes(article.id)) &&
-            (!from || !to || (published > from && published < to))
-    })
 })
